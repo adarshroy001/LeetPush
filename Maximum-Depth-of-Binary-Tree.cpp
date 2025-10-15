@@ -13,9 +13,9 @@ class Solution {
 public:
     int maxDepth(TreeNode* root) {
         if(root == NULL ) return 0 ; 
-        vector<vector<int>> leveltree ; 
         queue<TreeNode*> q ;
         q.push(root) ; 
+        int count = 0 ;         
         while(!q.empty()){
           int size = q.size() ; 
           vector<int> v ; 
@@ -26,12 +26,9 @@ public:
              if(newNode->right != NULL) q.push(newNode->right) ;
              v.push_back(newNode->val) ; 
           }
-          leveltree.push_back(v) ; 
+          count ++ ; 
         }
-        int count = 0 ; 
-        for(auto &ans : leveltree){
-            count++; 
-        }
+
         return count ; 
     }
 };
