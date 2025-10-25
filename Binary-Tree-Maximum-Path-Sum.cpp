@@ -16,8 +16,8 @@ public:
         if(root == NULL){
            return 0 ; 
         }
-        int leftMax = max(sum,sum + helper(root->left, sum) );
-        int rightMax = max(sum,sum + helper(root->right, sum));
+        int leftMax = max(sum,helper(root->left, sum) );
+        int rightMax = max(sum,helper(root->right, sum));
 
         ans = max(ans, leftMax + rightMax + root->val) ;
 
@@ -25,7 +25,6 @@ public:
 
     }
     int maxPathSum(TreeNode* root) {
-        if(root != NULL && root->left == NULL && root->right ==NULL) return root->val ;
         helper(root,0) ;
         return ans ;
     }
