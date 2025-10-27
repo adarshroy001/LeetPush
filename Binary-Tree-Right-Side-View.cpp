@@ -40,14 +40,32 @@
 
 
 //M-2 using recurssion and map and checking corrosponding to key
+// class Solution {
+// public:
+//     map<int , int >  m ; 
+//     vector<int> ans ; 
+//     void helper(TreeNode* root , int lvl){
+//         if(!root) return ; 
+//         if(!m.count(lvl)){
+//             m[lvl] ++  ;
+//             ans.push_back(root->val) ; 
+//         }
+//         helper(root->right, lvl+1) ;
+//         helper(root->left , lvl+1) ;
+//     }
+//     vector<int> rightSideView(TreeNode* root) {
+//         helper(root,0) ; 
+//         return ans ; 
+//     }
+// };
+
+//M-3 using recurssion and checking with vector size instead of map 
 class Solution {
 public:
-    map<int , int >  m ; 
     vector<int> ans ; 
     void helper(TreeNode* root , int lvl){
         if(!root) return ; 
-        if(!m.count(lvl)){
-            m[lvl] ++  ;
+        if(ans.size() == lvl){
             ans.push_back(root->val) ; 
         }
         helper(root->right, lvl+1) ;
