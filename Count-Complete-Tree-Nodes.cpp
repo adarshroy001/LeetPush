@@ -11,8 +11,26 @@
  */
 class Solution {
 public:
-    int countNodes(TreeNode* root) {
-        if(!root) return 0;
-        return 1 + countNodes(root->left) + countNodes(root->right);
+//Tc- O(N)
+    // int countNodes(TreeNode* root) {
+    //     if(!root) return 0;
+    //     return 1 + countNodes(root->left) + countNodes(root->right);
+    // }
+
+    //Tc-O(logN) 
+        int countLeft (TreeNode* root){
+            if(!root) return 0 ; 
+            return 1 + countLeft(root->left) ; 
+        }
+        int countRight (TreeNode* root){
+            if(!root) return 0 ; 
+            return 1 + countRight(root->right) ; 
+        }
+        int countNodes(TreeNode* root) {
+          if(root == NULL) return 0 ; 
+          int lh =  countLeft(root) ; 
+          int rh = countRight(root) ; 
+          if(lh == rh) return pow(2,lh) - 1 ; 
+          return 1  + countNodes(root->left) + countNodes(root->right) ; 
     }
 };
