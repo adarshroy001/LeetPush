@@ -1,35 +1,69 @@
-1class Solution {
-2public:
-3    bool isBipartite(vector<vector<int>>& graph) {
-4        int node = graph.size() ; 
-5        vector<int> vis(node,-1) ;
-6        queue<pair<int,int>> q ; 
-7        for(int i = 0 ; i < node ; ++i) {
-8            if(vis[i] == -1){
-9                q.push({i,0}) ;  
-10                vis[i] = 0 ; 
-11                while(!q.empty()){
-12                    int el = q.front().first ; 
-13                    int col = q.front().second ; 
-14                    q.pop() ; 
-15                    for(int it: graph[el]){
-16                        if(vis[it] == -1){
-17                            if(col == 0){
-18                                q.push({it,1}) ; 
-19                                vis[it] = 1 ; 
-20                            }else{
-21                                q.push({it,0}) ;
-22                                vis[it] = 0 ; 
-23                            }
-24                        }
-25                        else if(vis[it] != -1){
-26                            if(vis[it] == col) return false ; 
-27                        } 
-28                    }
+1// class Solution {
+2// public:
+3//     bool isBipartite(vector<vector<int>>& graph) {
+4//         int node = graph.size() ; 
+5//         vector<int> vis(node,-1) ;
+6//         queue<pair<int,int>> q ; 
+7//         for(int i = 0 ; i < node ; ++i) {
+8//             if(vis[i] == -1){
+9//                 q.push({i,0}) ;  
+10//                 vis[i] = 0 ; 
+11//                 while(!q.empty()){
+12//                     int el = q.front().first ; 
+13//                     int col = q.front().second ; 
+14//                     q.pop() ; 
+15//                     for(int it: graph[el]){
+16//                         if(vis[it] == -1){
+17//                             if(col == 0){
+18//                                 q.push({it,1}) ; 
+19//                                 vis[it] = 1 ; 
+20//                             }else{
+21//                                 q.push({it,0}) ;
+22//                                 vis[it] = 0 ; 
+23//                             }
+24//                         }
+25//                         else if(vis[it] != -1){
+26//                             if(vis[it] == col) return false ; 
+27//                         } 
+28//                     }
 29
-30                }
-31            }
-32        }
-33        return true ; 
-34    }
-35};
+30//                 }
+31//             }
+32//         }
+33//         return true ; 
+34//     }
+35// };
+36
+37
+38// m-2 Dfs 
+39
+40class Solution {
+41private:
+42    bool dfs(vector<vector<int>>& graph ,vector<int> &vis , int node , int col){
+43        vis[node] = col ; 
+44        for( int it : graph[node]){
+45            if(vis[it] == -1) {
+46                if(col == 0){
+47                    if(!dfs(graph,vis,it,1)) return false ; 
+48                }else{
+49                    if(!dfs(graph,vis,it,0)) return false ;                   
+50                }
+51            }
+52            else{
+53                if(vis[it] == col) return false ;
+54            }
+55        }
+56        return true ; 
+57    }    
+58public:
+59    bool isBipartite(vector<vector<int>>& graph) {
+60        int n = graph.size() ; 
+61        vector<int> vis(n,-1) ;
+62        for(int i = 0 ; i < n ; ++i) {
+63            if(vis[i] == -1) {
+64                if(!dfs(graph,vis,i,0)) return false ; 
+65            }
+66        }
+67        return true ; 
+68    }
+69};
