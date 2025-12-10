@@ -1,0 +1,35 @@
+1class Solution {
+2public:
+3    bool isBipartite(vector<vector<int>>& graph) {
+4        int node = graph.size() ; 
+5        vector<int> vis(node,-1) ;
+6        queue<pair<int,int>> q ; 
+7        for(int i = 0 ; i < node ; ++i) {
+8            if(vis[i] == -1){
+9                q.push({i,0}) ;  
+10                vis[i] = 0 ; 
+11                while(!q.empty()){
+12                    int el = q.front().first ; 
+13                    int col = q.front().second ; 
+14                    q.pop() ; 
+15                    for(int it: graph[el]){
+16                        if(vis[it] == -1){
+17                            if(col == 0){
+18                                q.push({it,1}) ; 
+19                                vis[it] = 1 ; 
+20                            }else{
+21                                q.push({it,0}) ;
+22                                vis[it] = 0 ; 
+23                            }
+24                        }
+25                        else if(vis[it] != -1){
+26                            if(vis[it] == col) return false ; 
+27                        } 
+28                    }
+29
+30                }
+31            }
+32        }
+33        return true ; 
+34    }
+35};
